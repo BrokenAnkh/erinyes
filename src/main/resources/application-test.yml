@@ -1,0 +1,28 @@
+spring:
+  datasource: # 数据库
+    driverClassName : org.mariadb.jdbc.Driver
+    url: jdbc:mysql://10.100.4.2:3306/jmall_dev
+    username: jmall
+    password: Zcfebb365H
+
+logging: # 日志
+  config: classpath:log4j2/log4j2-dev.xml
+  level:
+    root: info
+
+mqtt: # mqtt
+  broker:
+    urls: tcp://140.143.187.209:1883
+    username: admin
+    password: beyondsoft.com
+  client:
+    qos: 1
+    keepAlive: 20
+    completionTimeout: 5000
+    connectionTimeout: 10
+  consumer:
+    id: just
+    topics: good,test,yes
+  producer:
+    id: siren
+    default.topic: yes/ICQ
