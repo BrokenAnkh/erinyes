@@ -5,20 +5,28 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>erinyes</groupId>
-    <artifactId>echoes</artifactId>
+    <artifactId>parent</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
 
+    <modules>
+        <module>echoes</module>
+    </modules>
+
     <properties>
+        <!-- project -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <!-- jdk setting -->
         <jdk.version>11</jdk.version>
-        <java.version>11</java.version>
+        <jdk.vendor>11</jdk.vendor>
         <!-- idea maven setting -->
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <maven.compiler.release>11</maven.compiler.release>
+        <!-- maven plugins version -->
         <maven.compiler.version>3.8.0</maven.compiler.version>
-        <!-- project -->
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.toolchains.vesion>1.1</maven.toolchains.vesion>
         <!-- jar version -->
         <fastjson.version>1.2.12</fastjson.version>
         <springfox.version>2.9.2</springfox.version>
@@ -33,18 +41,7 @@
     </parent>
 
     <dependencies>
-        <!-- == spring web == -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-logging</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <!-- == spring web == -->
+
 
         <!-- == spring logger == -->
         <!-- Spring Boot log4j2依赖 -->
@@ -53,67 +50,6 @@
             <artifactId>spring-boot-starter-log4j2</artifactId>
         </dependency>
         <!-- == spring logger == -->
-
-        <!-- == spring integration == -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-integration</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.integration</groupId>
-            <artifactId>spring-integration-stream</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.integration</groupId>
-            <artifactId>spring-integration-mqtt</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.eclipse.paho</groupId>
-                    <artifactId>mqtt-client</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <!-- eclipse paho -->
-        <dependency>
-            <groupId>org.eclipse.paho</groupId>
-            <artifactId>org.eclipse.paho.client.mqttv3</artifactId>
-        </dependency>
-        <!-- == spring integration == -->
-
-        <!-- == spring test == -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.paho</groupId>
-            <artifactId>org.eclipse.paho.client.mqttv3</artifactId>
-            <version>RELEASE</version>
-            <scope>compile</scope>
-        </dependency>
-        <!--junit4-->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-        </dependency>
-        <!-- == spring test == -->
-
-        <!-- == data == -->
-        <dependency>
-            <groupId>org.mybatis.spring.boot</groupId>
-            <artifactId>mybatis-spring-boot-starter</artifactId>
-            <version>${mybatis-spring-boot.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.mariadb.jdbc</groupId>
-            <artifactId>mariadb-java-client</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-        </dependency>
-        <!-- == jdbc == -->
 
         <!-- == json == -->
         <dependency>
@@ -164,12 +100,12 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-toolchains-plugin</artifactId>
-                <version>1.1</version>
+                <version>${maven.toolchains.vesion}</version>
                 <configuration>
                     <toolchains>
                         <jdk>
-                            <version>11</version>
-                            <vendor>oracle</vendor>
+                            <version>${jdk.version}</version>
+                            <vendor>${jdk.vendor}</vendor>
                         </jdk>
                     </toolchains>
                 </configuration>

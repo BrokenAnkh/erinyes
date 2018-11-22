@@ -8,11 +8,9 @@ spring: # spring
 server: # 服务
   port: 8080
   servlet:
-    context-path: /api${api.version}
-
-
+    context-path: /echoes${api.version}
 
 mybatis: # Mybatis
   mapperLocations: classpath*:mapper/*.xml
 
-api.version: 1 # api版本号
+api.version: 0.1 # api版本号
