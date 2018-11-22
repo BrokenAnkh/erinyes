@@ -5,11 +5,6 @@ spring:
     username: jmall
     password: Zcfebb365H
 
-logging: # 日志
-  config: classpath:log4j2/log4j2-dev.xml
-  level:
-    root: info
-
 mqtt: # mqtt
   broker:
     urls: tcp://140.143.187.209:1883
@@ -26,3 +21,8 @@ mqtt: # mqtt
   producer:
     id: siren
     default.topic: yes/ICQ
+
+logging: # 日志
+  config: classpath:log4j2/log4j2-dev.xml
+  level:
+    root: info

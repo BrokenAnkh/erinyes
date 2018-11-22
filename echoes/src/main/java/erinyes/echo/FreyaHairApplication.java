@@ -7,16 +7,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@MapperScan("com.beyondsoft.jmall.mapper.*")
+@MapperScan("erinyes.echo.mapper.*")
 public class FreyaHairApplication {
     private static final Logger LOGGER = LoggerFactory.getLogger(FreyaHairApplication.class);
-
-
 
     public static void main(String[] args) {
         SpringApplication.run(FreyaHairApplication.class, args);
     }
-
 }
 
 
