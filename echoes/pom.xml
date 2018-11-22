@@ -7,6 +7,7 @@
         <groupId>erinyes</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
+
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>erinyes</groupId>
@@ -87,6 +88,4 @@
         </dependency>
         <!-- == jdbc == -->
     </dependencies>
-
-
 </project>
