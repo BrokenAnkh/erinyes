@@ -45,9 +45,9 @@ public class SwaggerConfiguration {
      */
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("JinMao APIs")
-                .description("金茂App Api 文档")
-                .termsOfServiceUrl("http://123.206.64.42")
+                .title("Echoes APIs")
+                .description("回声 Api 文档")
+                .termsOfServiceUrl("https://github.com/Posuoe/erinyes")
                 .version(apiVersion)
                 .build();
     }

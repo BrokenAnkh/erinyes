@@ -31,11 +31,12 @@ public class MqttConfiguration {
     String password;
     @Value("${mqtt.client.keepalive}")
     int keepAlive;
-    @Value("${mqtt.client.connectiontimeout}")
+    @Value("${mqtt.client.connectionTimeout}")
     int connectionTimeout;
 
-    @Bean
-    public MqttConnectOptions mqttConnectOptions() {
+    @Bean("mqttConnectOptions")
+    public MqttConnectOptions getOptions() {
+        LOGGER.info("options load");
         MqttConnectOptions options = new MqttConnectOptions();
 
         options.setServerURIs(urls);
@@ -47,11 +48,11 @@ public class MqttConfiguration {
         return options;
     }
 
-    @Bean
-    public MqttPahoClientFactory mqttClientFactory() {
+    @Bean("mqttClientFactory")
+    public MqttPahoClientFactory getFactory() {
+        LOGGER.info("factory load");
         DefaultMqttPahoClientFactory factory = new DefaultMqttPahoClientFactory();
-        factory.setConnectionOptions(mqttConnectOptions());
-        LOGGER.info("mqtt client start");
+        factory.setConnectionOptions(getOptions());
         return factory;
     }
 
@@ -59,38 +60,43 @@ public class MqttConfiguration {
     public class ConsumerConfiguration {
         @Value("${mqtt.client.qos}")
         int qos;
-        @Value("${mqtt.client.completiontimeout}")
+        @Value("${mqtt.client.completionTimeout}")
         int completionTimeout;
         @Value("${mqtt.consumer.id}")
         String consumerId;
         @Value("${mqtt.consumer.topics}")
         String[] consumerTopics;
 
-        @Bean
-        public IntegrationFlow mqttInFlow() {
-            LOGGER.info("make mqtt in flow");
+        @Bean("mqttInFlow")
+        public IntegrationFlow getFlow() {
             return IntegrationFlows
-                    .from(mqttInbound())
+                    .from(getAdapter())
                     .transform(p -> p + ", received from MQTT")
-                    .handle(consumerLogger())
+                    .handle(getHandler())
                     .get();
         }
 
-        private LoggingHandler consumerLogger() {
+        @Bean("mqttLoggingHandler")
+        public LoggingHandler getHandler() {
             LoggingHandler loggingHandler = new LoggingHandler("INFO");
             loggingHandler.setLoggerName("Consume");
             return loggingHandler;
         }
 
-        @Bean
-        public MessageProducerSupport mqttInbound() {
-            MqttPahoMessageDrivenChannelAdapter adapter = new MqttPahoMessageDrivenChannelAdapter(consumerId, mqttClientFactory(), consumerTopics);
+        @Bean("mqttInbound")
+        public MessageProducerSupport getAdapter() {
+            MqttPahoMessageDrivenChannelAdapter adapter = new MqttPahoMessageDrivenChannelAdapter(consumerId, getFactory(), consumerTopics);
             adapter.setCompletionTimeout(completionTimeout);
             adapter.setConverter(new DefaultPahoMessageConverter());
             adapter.setQos(qos);
+//            adapter.setOutputChannel(getChannel());
             return adapter;
         }
 
+//        @Bean("mqttInChannel")
+//        public MessageChannel getChannel() {
+//            return new DirectChannel();
+//        }
     }
 
     @Configuration
@@ -100,24 +106,23 @@ public class MqttConfiguration {
         @Value("${mqtt.producer.default.topic}")
         String producerTopic;
 
-        @Bean
-        public IntegrationFlow mqttOutFlow() {
-            LOGGER.info("make mqtt out flow");
+        @Bean("mqttOutFlow")
+        public IntegrationFlow getFlow() {
             return IntegrationFlows
-                    .from(mqttOutChannel())
+                    .from(getChannel())
                     .transform(p -> p + " sent to MQTT")
-                    .handle(mqttOutbound())
+                    .handle(getHandler())
                     .get();
         }
 
-        @Bean
-        public MessageChannel mqttOutChannel() {
+        @Bean("mqttOutChannel")
+        public MessageChannel getChannel() {
             return new DirectChannel();
         }
 
-        @Bean
-        public MessageHandler mqttOutbound() {
-            MqttPahoMessageHandler messageHandler = new MqttPahoMessageHandler(producerId, mqttClientFactory());
+        @Bean("mqttOutbound")
+        public MessageHandler getHandler() {
+            MqttPahoMessageHandler messageHandler = new MqttPahoMessageHandler(producerId, getFactory());
             messageHandler.setAsync(true);
             messageHandler.setDefaultTopic(producerTopic);
             return messageHandler;

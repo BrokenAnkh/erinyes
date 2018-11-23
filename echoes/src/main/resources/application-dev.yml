@@ -7,11 +7,11 @@ spring:
 
 mqtt: #mqtt
   broker:
-    urls: tcp://140.143.187.209:1883
+    urls: tcp://127.0.0.1:1883
     username: admin
-    password: beyondsoft.com
+    password: private
   client:
-    qos: 1
+    qos: 0
     keepAlive: 20
     completionTimeout: 5000
     connectionTimeout: 10
@@ -21,3 +21,7 @@ mqtt: #mqtt
   producer:
     id: siren
     default.topic: yes/ICQ
+
+logging: # 日志
+  level:
+    root: info

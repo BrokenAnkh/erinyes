@@ -6,7 +6,7 @@ spring: # spring
       enabled: ALWAYS
 
 server: # 服务
-  port: 8080
+  port: 9080
   servlet:
     context-path: /echoes${api.version}
 

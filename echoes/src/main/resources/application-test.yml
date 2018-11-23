@@ -12,7 +12,7 @@ mqtt: # mqtt
     password: beyondsoft.com
   client:
     qos: 1
-    keepAlive: 20
+    keepalive: 20
     completionTimeout: 5000
     connectionTimeout: 10
   consumer:
